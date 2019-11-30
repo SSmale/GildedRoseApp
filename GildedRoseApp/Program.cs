@@ -7,6 +7,9 @@ namespace ConsoleApplication
     public class Program
     {
         IList<Item> Items;
+        private int MAX_QUALITY = 50;
+        private int MIN_QUALITY = 0;
+        private int BASE_QUALITY_DECREMENT = 1;
 
         public Program(IList<Item> items)
         {
@@ -59,7 +62,7 @@ namespace ConsoleApplication
                 // decrement the number of days before doing anything else.
                 item.SellIn -= 1;
 
-                if (item.Quality == 50 || (item.Quality == 0 && item.Name != "Aged Brie"))
+                if (item.Quality == MAX_QUALITY || (item.Quality == MIN_QUALITY && item.Name != "Aged Brie"))
                 {
                     // return early for known limit conditions
                     return;
@@ -88,31 +91,31 @@ namespace ConsoleApplication
                     case "Conjured Mana Cake":
                         if (item.SellIn >= 0)
                         {
-                            item.Quality -= 2;
+                            item.Quality -= BASE_QUALITY_DECREMENT * 2;
                         } else
                         {
-                            item.Quality -= 4;
+                            item.Quality -= BASE_QUALITY_DECREMENT * 2 * 2;
                         }
                         break;
                     default:
                         if (item.SellIn >= 0)
                         {
-                            item.Quality -= 1;
+                            item.Quality -= BASE_QUALITY_DECREMENT;
                         }
                         else
                         {
-                            item.Quality -= 2;
+                            item.Quality -= BASE_QUALITY_DECREMENT * 2;
                         }
                         break;
                 }
 
-                if (item.Quality > 50)
+                if (item.Quality > MAX_QUALITY)
                 {
-                    item.Quality = 50;
+                    item.Quality = MAX_QUALITY;
                 }
-                else if (item.Quality < 0)
+                else if (item.Quality < MIN_QUALITY)
                 {
-                    item.Quality = 0;
+                    item.Quality = MIN_QUALITY;
                 }
             }
         }
