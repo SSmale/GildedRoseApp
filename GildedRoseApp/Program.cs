@@ -15,13 +15,22 @@ namespace ConsoleApplication
     {
         IList<Item> Items;
 
+        public Program(IList<Item> items)
+        {
+            Items = items;
+        }
+
+        public IList<Item> GetItems()
+        {
+            return Items;
+        }
+
         public static void Main(string[] args)
         {
             Console.WriteLine("OMGHAI!");
 
-            var app = new Program()
-            {
-                Items = new List<Item>
+            var app = new Program(
+                new List<Item>
                         {
                             new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
                             new Item {Name = "Aged Brie", SellIn = 2, Quality = 0},
@@ -35,8 +44,8 @@ namespace ConsoleApplication
                                 },
                             new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
                         }
+                );
 
-            };
 
             app.UpdateQuality();
 
