@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using ConsoleApplication;
+using GildedRoseApp.console;
 using Xunit;
 
 namespace GildedRoseApp.Console.Tests
