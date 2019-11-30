@@ -123,5 +123,15 @@ namespace GildedRoseApp.Console.Tests
 
             Assert.Equal(0, app.GetItems()[0].Quality);
         }
+
+        [Fact]
+        public void ConjuredItemsDegradeTwoPerDay()
+        {
+            IList<Item> Items = new List<Item> { new Item { Name = "Conjured Mana Cake", SellIn = 10, Quality = 10 } };
+            var app = new Program(Items);
+            app.UpdateQuality();
+
+            Assert.Equal(8, app.GetItems()[0].Quality);
+        }
     }
 }
