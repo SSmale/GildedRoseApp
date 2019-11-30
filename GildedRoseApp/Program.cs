@@ -55,11 +55,11 @@ namespace ConsoleApplication
                     {
                         if (item.Name != "Sulfuras, Hand of Ragnaros")
                         {
-                            item.Quality = item.Quality - 1;
+                            item.Quality -= 1;
 
                             if(item.Name == "Conjured Mana Cake")
                             {
-                                item.Quality = item.Quality - 1;
+                                item.Quality -= 1;
                             }
                         }
                     }
@@ -68,7 +68,7 @@ namespace ConsoleApplication
                 {
                     if (item.Quality < 50)
                     {
-                        item.Quality = item.Quality + 1;
+                        item.Quality += 1;
 
                         if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
                         {
@@ -76,7 +76,7 @@ namespace ConsoleApplication
                             {
                                 if (item.Quality < 50)
                                 {
-                                    item.Quality = item.Quality + 1;
+                                    item.Quality += 1;
                                 }
                             }
 
@@ -84,7 +84,7 @@ namespace ConsoleApplication
                             {
                                 if (item.Quality < 50)
                                 {
-                                    item.Quality = item.Quality + 1;
+                                    item.Quality += 1;
                                 }
                             }
                         }
@@ -93,7 +93,7 @@ namespace ConsoleApplication
 
                 if (item.Name != "Sulfuras, Hand of Ragnaros")
                 {
-                    item.SellIn = item.SellIn - 1;
+                    item.SellIn -= 1;
                 }
 
                 if (item.SellIn < 0)
@@ -106,26 +106,26 @@ namespace ConsoleApplication
                             {
                                 if (item.Name != "Sulfuras, Hand of Ragnaros")
                                 {
-                                    item.Quality = item.Quality - 1;
+                                    item.Quality -= 1;
 
                                     if (item.Name == "Conjured Mana Cake")
                                     {
                                         Console.WriteLine("mana");
-                                        item.Quality = item.Quality - 1;
+                                        item.Quality -= 1;
                                     }
                                 }
                             }
                         }
                         else
                         {
-                            item.Quality = item.Quality - item.Quality;
+                            item.Quality -= item.Quality;
                         }
                     }
                     else
                     {
                         if (item.Quality < 50)
                         {
-                            item.Quality = item.Quality + 1;
+                            item.Quality += 1;
                         }
                     }
                 }
