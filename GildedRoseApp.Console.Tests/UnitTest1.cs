@@ -31,6 +31,16 @@ namespace GildedRoseApp.Console.Tests
         }
 
         [Fact]
+        public void NormalItemAfterSellIn_QualityDecrementedByTwo()
+        {
+            IList<Item> Items = new List<Item> { new Item { Name = "foo", SellIn = 0, Quality = 10 } };
+            var app = new Program(Items);
+            app.UpdateQuality();
+
+            Assert.Equal(8, app.GetItems()[0].Quality);
+        }
+
+        [Fact]
         public void QualityCanNeverBeNegative()
         {
             IList<Item> Items = new List<Item> { new Item { Name = "foo", SellIn = 10, Quality = 0 } };
