@@ -49,6 +49,13 @@ namespace ConsoleApplication
         {
             foreach (Item item in Items)
             {
+
+                if(item.Name == "Sulfuras, Hand of Ragnaros" || item.Quality == 50 || (item.Quality == 0 && item.Name != "Aged Brie"))
+                {
+                    // return early for known limit conditions
+                    return;
+                }
+
                 if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert")
                 {
                     if (item.Quality > 0)
