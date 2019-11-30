@@ -111,5 +111,17 @@ namespace GildedRoseApp.Console.Tests
             // 1 days
             Assert.Equal(13, app.GetItems()[1].Quality);
         }
+
+        [Fact]
+        public void BackstagePasses_AfterShowPasses_QualityEqualsZero()
+        {
+            IList<Item> Items = new List<Item> {
+                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 0, Quality = 10 }
+            };
+            var app = new Program(Items);
+            app.UpdateQuality();
+
+            Assert.Equal(0, app.GetItems()[0].Quality);
+        }
     }
 }
