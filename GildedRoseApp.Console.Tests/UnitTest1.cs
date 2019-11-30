@@ -39,5 +39,15 @@ namespace GildedRoseApp.Console.Tests
 
             Assert.Equal(0, app.GetItems()[0].Quality);
         }
+
+        [Fact]
+        public void AgedBrieGetsBetterWithAge()
+        {
+            IList<Item> Items = new List<Item> { new Item { Name = "Aged Brie", SellIn = 10, Quality = 0 } };
+            var app = new Program(Items);
+            app.UpdateQuality();
+
+            Assert.Equal(1, app.GetItems()[0].Quality);
+        }
     }
 }
