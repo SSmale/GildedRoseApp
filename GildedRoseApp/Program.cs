@@ -50,7 +50,16 @@ namespace ConsoleApplication
             foreach (Item item in Items)
             {
 
-                if(item.Name == "Sulfuras, Hand of Ragnaros" || item.Quality == 50 || (item.Quality == 0 && item.Name != "Aged Brie"))
+                if (item.Name == "Sulfuras, Hand of Ragnaros")
+                {
+                    // return early for items that will never change
+                    return;
+                }
+
+                // decrement the number of days before doing anything else.
+                item.SellIn -= 1;
+
+                if (item.Quality == 50 || (item.Quality == 0 && item.Name != "Aged Brie"))
                 {
                     // return early for known limit conditions
                     return;
@@ -96,11 +105,6 @@ namespace ConsoleApplication
                             }
                         }
                     }
-                }
-
-                if (item.Name != "Sulfuras, Hand of Ragnaros")
-                {
-                    item.SellIn -= 1;
                 }
 
                 if (item.SellIn < 0)
