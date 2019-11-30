@@ -10,3 +10,5 @@ The .net core version is out of date so i created a new project and brought over
 [This is the minimum code needed to meet the client requirements](https://github.com/SSmale/GildedRoseApp/tree/v1) 
 
 [This is the point I am happy the next developer has an easier job if a new requirement needs adding](https://github.com/SSmale/GildedRoseApp/tree/v2)
+
+[This is using classes for each of the item types to make the program more robust, but i think might break the rules of the kata](https://github.com/SSmale/GildedRoseApp/tree/classes)
