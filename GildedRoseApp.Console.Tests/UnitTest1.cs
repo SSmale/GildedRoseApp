@@ -135,13 +135,23 @@ namespace GildedRoseApp.Console.Tests
         }
 
         [Fact]
-        public void ConjuredItemsDegradeTwoPerDay()
+        public void ConjuredItemsDegradeTwoPerDay_PositiveSellIn()
         {
             IList<Item> Items = new List<Item> { new Item { Name = "Conjured Mana Cake", SellIn = 10, Quality = 10 } };
             var app = new Program(Items);
             app.UpdateQuality();
 
             Assert.Equal(8, app.GetItems()[0].Quality);
+        }
+
+        [Fact]
+        public void ConjuredItemsDegradeTwoPerDay_NegativeSellIn()
+        {
+            IList<Item> Items = new List<Item> { new Item { Name = "Conjured Mana Cake", SellIn = 0, Quality = 10 } };
+            var app = new Program(Items);
+            app.UpdateQuality();
+
+            Assert.Equal(6, app.GetItems()[0].Quality);
         }
     }
 }
