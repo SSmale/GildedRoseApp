@@ -6,17 +6,16 @@ namespace ConsoleApplication
 {
     public class Program
     {
-        IList<Item> Items;
+        IList<IItem> Items;
         private int MAX_QUALITY = 50;
         private int MIN_QUALITY = 0;
-        private int BASE_QUALITY_DECREMENT = 1;
 
-        public Program(IList<Item> items)
+        public Program(IList<IItem> items)
         {
             Items = items;
         }
 
-        public IList<Item> GetItems()
+        public IList<IItem> GetItems()
         {
             return Items;
         }
@@ -26,19 +25,19 @@ namespace ConsoleApplication
             Console.WriteLine("OMGHAI!");
 
             var app = new Program(
-                new List<Item>
+                new List<IItem>
                         {
-                            new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
-                            new Item {Name = "Aged Brie", SellIn = 2, Quality = 0},
-                            new Item {Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7},
-                            new Item {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
-                            new Item
+                            new StandardItem {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
+                            new AgedBrieItem {Name = "Aged Brie", SellIn = 2, Quality = 0},
+                            new StandardItem {Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7},
+                            new SulfurasItem {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
+                            new BackStagePassItem
                                 {
                                     Name = "Backstage passes to a TAFKAL80ETC concert",
                                     SellIn = 15,
                                     Quality = 20
                                 },
-                            new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
+                            new ConjuredItem {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
                         }
                 );
 
@@ -50,10 +49,10 @@ namespace ConsoleApplication
 
         public void UpdateQuality()
         {
-            foreach (Item item in Items)
+            foreach (IItem item in Items)
             {
 
-                if (item.Name == "Sulfuras, Hand of Ragnaros")
+                if (item is SulfurasItem)
                 {
                     // return early for items that will never change
                     return;
@@ -62,53 +61,15 @@ namespace ConsoleApplication
                 // decrement the number of days before doing anything else.
                 item.SellIn -= 1;
 
-                if (item.Quality == MAX_QUALITY || (item.Quality == MIN_QUALITY && item.Name != "Aged Brie"))
+                if (item.Quality == MAX_QUALITY || (item.Quality == MIN_QUALITY && !(item is AgedBrieItem)))
                 {
                     // return early for known limit conditions
                     return;
                 }
 
-                switch (item.Name)
-                {
-                    case "Aged Brie":
-                        item.Quality += 1;
-                        break;
-                    case "Backstage passes to a TAFKAL80ETC concert":
-                        if (item.SellIn > 10)
-                        {
-                            item.Quality += 1;
-                        } else if (item.SellIn > 5)
-                        {
-                            item.Quality += 2;
-                        } else if (item.SellIn >= 0)
-                        {
-                            item.Quality += 3;
-                        } else
-                        {
-                            item.Quality = 0;
-                        }
-                        break;
-                    case "Conjured Mana Cake":
-                        if (item.SellIn >= 0)
-                        {
-                            item.Quality -= BASE_QUALITY_DECREMENT * 2;
-                        } else
-                        {
-                            item.Quality -= BASE_QUALITY_DECREMENT * 2 * 2;
-                        }
-                        break;
-                    default:
-                        if (item.SellIn >= 0)
-                        {
-                            item.Quality -= BASE_QUALITY_DECREMENT;
-                        }
-                        else
-                        {
-                            item.Quality -= BASE_QUALITY_DECREMENT * 2;
-                        }
-                        break;
-                }
-
+                // use the method defined on the class to perform the update 
+                item.UpdateQuality();
+                
                 if (item.Quality > MAX_QUALITY)
                 {
                     item.Quality = MAX_QUALITY;

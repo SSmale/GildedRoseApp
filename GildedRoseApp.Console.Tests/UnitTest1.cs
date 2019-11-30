@@ -11,7 +11,7 @@ namespace GildedRoseApp.Console.Tests
         [Fact]
         public void CanSetandReadItems()
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "foo", SellIn = 0, Quality = 0 } };
+            IList<IItem> Items = new List<IItem> { new StandardItem { Name = "foo", SellIn = 0, Quality = 0 } };
             var app = new Program(Items);
 
             Assert.Equal("foo", app.GetItems()[0].Name);
@@ -20,7 +20,7 @@ namespace GildedRoseApp.Console.Tests
         [Fact]
         public void NormalItemAfterOneDay_QualityandSellInDecrementedByOne()
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "foo", SellIn = 10, Quality = 10 } };
+            IList<IItem> Items = new List<IItem> { new StandardItem { Name = "foo", SellIn = 10, Quality = 10 } };
             var app = new Program(Items);
             app.UpdateQuality();
 
@@ -33,7 +33,7 @@ namespace GildedRoseApp.Console.Tests
         [Fact]
         public void NormalItemAfterSellIn_QualityDecrementedByTwo()
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "foo", SellIn = 0, Quality = 10 } };
+            IList<IItem> Items = new List<IItem> { new StandardItem { Name = "foo", SellIn = 0, Quality = 10 } };
             var app = new Program(Items);
             app.UpdateQuality();
 
@@ -43,7 +43,7 @@ namespace GildedRoseApp.Console.Tests
         [Fact]
         public void QualityCanNeverBeNegative()
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "foo", SellIn = 10, Quality = 0 } };
+            IList<IItem> Items = new List<IItem> { new StandardItem { Name = "foo", SellIn = 10, Quality = 0 } };
             var app = new Program(Items);
             app.UpdateQuality();
 
@@ -53,7 +53,7 @@ namespace GildedRoseApp.Console.Tests
         [Fact]
         public void AgedBrieGetsBetterWithAge()
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "Aged Brie", SellIn = 10, Quality = 0 } };
+            IList<IItem> Items = new List<IItem> { new AgedBrieItem { Name = "Aged Brie", SellIn = 10, Quality = 0 } };
             var app = new Program(Items);
             app.UpdateQuality();
 
@@ -63,7 +63,7 @@ namespace GildedRoseApp.Console.Tests
         [Fact]
         public void ItemQualityCannotBeGreaterThanFifty()
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "Aged Brie", SellIn = 10, Quality = 50 } };
+            IList<IItem> Items = new List<IItem> { new AgedBrieItem { Name = "Aged Brie", SellIn = 10, Quality = 50 } };
             var app = new Program(Items);
             app.UpdateQuality();
 
@@ -73,7 +73,7 @@ namespace GildedRoseApp.Console.Tests
         [Fact]
         public void SulfurasValuesDoNotChange()
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80 } };
+            IList<IItem> Items = new List<IItem> { new SulfurasItem { Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80 } };
             var app = new Program(Items);
             app.UpdateQuality();
 
@@ -83,7 +83,7 @@ namespace GildedRoseApp.Console.Tests
         [Fact]
         public void BackstagePasses_GreaterThan10Days_QualityIncreasesByOne()
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 12, Quality = 10 } };
+            IList<IItem> Items = new List<IItem> { new BackStagePassItem { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 12, Quality = 10 } };
             var app = new Program(Items);
             app.UpdateQuality();
 
@@ -93,9 +93,9 @@ namespace GildedRoseApp.Console.Tests
         [Fact]
         public void BackstagePasses_LessThanOrEqual10DaysButGreaterThanFive_QualityIncreasesByTwo()
         {
-            IList<Item> Items = new List<Item> {
-                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 11, Quality = 10 },
-                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 6, Quality = 10 }
+            IList<IItem> Items = new List<IItem> {
+                new BackStagePassItem { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 11, Quality = 10 },
+                new BackStagePassItem { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 6, Quality = 10 }
             };
             var app = new Program(Items);
             app.UpdateQuality();
@@ -109,9 +109,9 @@ namespace GildedRoseApp.Console.Tests
         [Fact]
         public void BackstagePasses_LessThanOrEqual5DaysButGreaterThanZero_QualityIncreasesByThree()
         {
-            IList<Item> Items = new List<Item> {
-                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 5, Quality = 10 },
-                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 1, Quality = 10 }
+            IList<IItem> Items = new List<IItem> {
+                new BackStagePassItem { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 5, Quality = 10 },
+                new BackStagePassItem { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 1, Quality = 10 }
             };
             var app = new Program(Items);
             app.UpdateQuality();
@@ -125,8 +125,8 @@ namespace GildedRoseApp.Console.Tests
         [Fact]
         public void BackstagePasses_AfterShowPasses_QualityEqualsZero()
         {
-            IList<Item> Items = new List<Item> {
-                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 0, Quality = 10 }
+            IList<IItem> Items = new List<IItem> {
+                new BackStagePassItem { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 0, Quality = 10 }
             };
             var app = new Program(Items);
             app.UpdateQuality();
@@ -137,7 +137,7 @@ namespace GildedRoseApp.Console.Tests
         [Fact]
         public void ConjuredItemsDegradeTwoPerDay_PositiveSellIn()
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "Conjured Mana Cake", SellIn = 10, Quality = 10 } };
+            IList<IItem> Items = new List<IItem> { new ConjuredItem { Name = "Conjured Mana Cake", SellIn = 10, Quality = 10 } };
             var app = new Program(Items);
             app.UpdateQuality();
 
@@ -147,7 +147,7 @@ namespace GildedRoseApp.Console.Tests
         [Fact]
         public void ConjuredItemsDegradeTwoPerDay_NegativeSellIn()
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "Conjured Mana Cake", SellIn = 0, Quality = 10 } };
+            IList<IItem> Items = new List<IItem> { new ConjuredItem { Name = "Conjured Mana Cake", SellIn = 0, Quality = 10 } };
             var app = new Program(Items);
             app.UpdateQuality();
 
