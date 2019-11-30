@@ -13,6 +13,7 @@ namespace GildedRoseApp.Console.Tests
         {
             IList<Item> Items = new List<Item> { new Item { Name = "foo", SellIn = 0, Quality = 0 } };
             var app = new Program(Items);
+
             Assert.Equal("foo", app.GetItems()[0].Name);
         }
 
@@ -27,6 +28,16 @@ namespace GildedRoseApp.Console.Tests
             Assert.Equal(9, app.GetItems()[0].Quality);
             // SellIn should be 9
             Assert.Equal(9, app.GetItems()[0].SellIn);
+        }
+
+        [Fact]
+        public void QualityCanNeverBeNegative()
+        {
+            IList<Item> Items = new List<Item> { new Item { Name = "foo", SellIn = 10, Quality = 0 } };
+            var app = new Program(Items);
+            app.UpdateQuality();
+
+            Assert.Equal(0, app.GetItems()[0].Quality);
         }
     }
 }
