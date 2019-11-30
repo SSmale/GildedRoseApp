@@ -81,7 +81,7 @@ namespace GildedRoseApp.Console.Tests
         }
 
         [Fact]
-        public void BackstagePasses_LessThan10DaysButGreaterThanFive_QualityIncreasesByTwo()
+        public void BackstagePasses_LessThanOrEqual10DaysButGreaterThanFive_QualityIncreasesByTwo()
         {
             IList<Item> Items = new List<Item> {
                 new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 10, Quality = 10 },
@@ -94,6 +94,22 @@ namespace GildedRoseApp.Console.Tests
             Assert.Equal(12, app.GetItems()[0].Quality);
             // 6 days
             Assert.Equal(12, app.GetItems()[1].Quality);
+        }
+
+        [Fact]
+        public void BackstagePasses_LessThanOrEqual5DaysButGreaterThanZero_QualityIncreasesByThree()
+        {
+            IList<Item> Items = new List<Item> {
+                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 5, Quality = 10 },
+                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 1, Quality = 10 }
+            };
+            var app = new Program(Items);
+            app.UpdateQuality();
+
+            // 5 days
+            Assert.Equal(13, app.GetItems()[0].Quality);
+            // 1 days
+            Assert.Equal(13, app.GetItems()[1].Quality);
         }
     }
 }
