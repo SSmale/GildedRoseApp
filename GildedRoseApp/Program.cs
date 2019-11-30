@@ -65,80 +65,54 @@ namespace ConsoleApplication
                     return;
                 }
 
-                if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert")
+                switch (item.Name)
                 {
-                    if (item.Quality > 0)
-                    {
-                        if (item.Name != "Sulfuras, Hand of Ragnaros")
+                    case "Aged Brie":
+                        item.Quality += 1;
+                        break;
+                    case "Backstage passes to a TAFKAL80ETC concert":
+                        if (item.SellIn > 10)
+                        {
+                            item.Quality += 1;
+                        } else if (item.SellIn > 5)
+                        {
+                            item.Quality += 2;
+                        } else if (item.SellIn >= 0)
+                        {
+                            item.Quality += 3;
+                        } else
+                        {
+                            item.Quality = 0;
+                        }
+                        break;
+                    case "Conjured Mana Cake":
+                        if (item.SellIn >= 0)
+                        {
+                            item.Quality -= 2;
+                        } else
+                        {
+                            item.Quality -= 4;
+                        }
+                        break;
+                    default:
+                        if (item.SellIn >= 0)
                         {
                             item.Quality -= 1;
-
-                            if(item.Name == "Conjured Mana Cake")
-                            {
-                                item.Quality -= 1;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (item.Quality < 50)
-                    {
-                        item.Quality += 1;
-
-                        if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
-                        {
-                            if (item.SellIn < 11)
-                            {
-                                if (item.Quality < 50)
-                                {
-                                    item.Quality += 1;
-                                }
-                            }
-
-                            if (item.SellIn < 6)
-                            {
-                                if (item.Quality < 50)
-                                {
-                                    item.Quality += 1;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (item.SellIn < 0)
-                {
-                    if (item.Name != "Aged Brie")
-                    {
-                        if (item.Name != "Backstage passes to a TAFKAL80ETC concert")
-                        {
-                            if (item.Quality > 0)
-                            {
-                                if (item.Name != "Sulfuras, Hand of Ragnaros")
-                                {
-                                    item.Quality -= 1;
-
-                                    if (item.Name == "Conjured Mana Cake")
-                                    {
-                                        Console.WriteLine("mana");
-                                        item.Quality -= 1;
-                                    }
-                                }
-                            }
                         }
                         else
                         {
-                            item.Quality -= item.Quality;
+                            item.Quality -= 2;
                         }
-                    }
-                    else
-                    {
-                        if (item.Quality < 50)
-                        {
-                            item.Quality += 1;
-                        }
-                    }
+                        break;
+                }
+
+                if (item.Quality > 50)
+                {
+                    item.Quality = 50;
+                }
+                else if (item.Quality < 0)
+                {
+                    item.Quality = 0;
                 }
             }
         }
